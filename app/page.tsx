@@ -8,6 +8,8 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import welcome from "@/public/welcome home.jpg";
 import TextType from "@/components/TextType";
+import SlideUpText from "@/components/SlideUpText";
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   const boxRef = useRef(null);
@@ -15,8 +17,12 @@ export default function Home() {
   const welcomeRef = useRef(null);
   const missionTextRef = useRef(null);
   const loveInActionRef = useRef(null);
-
-  gsap.registerPlugin(ScrollTrigger);
+  const container = useRef(null);
+  const sectionRef = useRef(null);
+  const loveRef = useRef(null);
+  const inRef = useRef(null);
+  const actionRef = useRef(null);
+  const centerContentRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -34,28 +40,59 @@ export default function Home() {
         duration: 1.5,
         ease: "power3.inOut",
       });
-      const tl = gsap.timeline({ delay: 0.5 });
+      const scrollTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1,
+          markers: true, // Keep this while testing
+        },
+      });
 
-      // Animate "OUR MISSION IS"
-      tl.from(missionTextRef.current, {
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-      })
-        // Animate "LOVE IN ACTION" words with stagger
+      scrollTl
         .from(
-          ".love-word",
+          loveRef.current,
           {
-            y: 100,
+            y: -200,
+            x: -100,
+            rotation: -15,
             opacity: 0,
             duration: 1,
-            stagger: 0.2,
-            ease: "power4.out",
           },
-          "-=0.3",
+          0,
+        )
+        .from(
+          inRef.current,
+          {
+            x: 200,
+            y: 100,
+            rotation: 10,
+            opacity: 0,
+            duration: 1,
+          },
+          0.7,
+        )
+        .from(
+          actionRef.current,
+          {
+            y: 200,
+            rotation: -5,
+            opacity: 0,
+            scale: 0.8,
+            duration: 1,
+          },
+          1.4,
+        )
+        .from(
+          centerContentRef.current,
+          {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+          },
+          2,
         );
-
       ScrollTrigger.refresh();
     });
 
@@ -86,7 +123,7 @@ export default function Home() {
         className="w-full h-fit bg-blue-800 z-10 grid grid-cols-1 sm:grid-cols-2 p-5 pt-20"
         ref={welcomeRef}
       >
-        <div className="flex flex-col justify-center pl-10 pb-5 sm:pb-0 sm:gap-y-28 gap-y-5">
+        <div className="flex flex-col justify-center sm:pl-10 pb-5 sm:pb-0 sm:gap-y-28 gap-y-5">
           <div className=" ">
             <h1 className=" text-black w-full font-syne text-3xl font-bold sm:text-5xl lg:text-7xl  ">
               This is
@@ -129,30 +166,36 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <section className="h-screen flex flex-col items-center justify-center bg-[#F5F1E8] relative overflow-hidden">
-        <div className="text-center">
-          {/* "OUR MISSION IS" */}
-          <p
-            ref={missionTextRef}
-            className="text-sm sm:text-base font-syne text-gray-600 mb-4 uppercase tracking-wider"
-          >
-            Our Mission Is
-          </p>
+      <section ref={sectionRef} className="relative h-[200vh] bg-[#F0F0E8]">
+        <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+          <SlideUpText
+            className="absolute top-[5%] -left-[5%] text-[15vw] font-bold uppercase text-[#111] leading-[0.8] whitespace-nowrap z-10"
+            text={"LOVE"}
+            triggerRef={loveRef}
+          />
 
-          {/* "LOVE IN ACTION" */}
           <div
-            ref={loveInActionRef}
-            className="flex flex-wrap justify-center items-center gap-2 sm:gap-4"
+            ref={inRef}
+            className="absolute top-[40%] -right-[5%] text-[10vw] font-bold uppercase text-[#111] leading-[0.8] whitespace-nowrap z-10"
+            style={{ fontFamily: "'Oswald', sans-serif" }}
           >
-            <span className="love-word text-6xl sm:text-8xl lg:text-9xl font-black text-black inline-block">
-              LOVE
+            IN
+          </div>
+          <div
+            ref={actionRef}
+            className="absolute -bottom-[5%] left-1/2 -translate-x-1/2 text-[18vw] font-bold uppercase text-[#111] leading-[0.8] whitespace-nowrap z-10"
+            style={{ fontFamily: "'Oswald', sans-serif" }}
+          >
+            ACTION
+          </div>
+          <div
+            ref={centerContentRef}
+            className="relative z-20 text-center max-w-[600px] p-8 bg-[#F0F0E8]/80 backdrop-blur-sm rounded-[20px]"
+          >
+            <span className="text-sm font-semibold tracking-[2px] uppercase mb-4 block">
+              Our Mission Is
             </span>
-            <span className="love-word text-6xl sm:text-8xl lg:text-9xl font-black text-black inline-block">
-              IN
-            </span>
-            <span className="love-word text-6xl sm:text-8xl lg:text-9xl font-black text-black inline-block">
-              ACTION
-            </span>
+            <h2 className="text-xl font-normal">LOVE IN ACTION</h2>
           </div>
         </div>
       </section>
