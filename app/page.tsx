@@ -7,6 +7,7 @@ import { useEffect, useRef } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import welcome from "@/public/welcome home.jpg";
+import TextType from "@/components/TextType";
 
 export default function Home() {
   const boxRef = useRef(null);
@@ -85,22 +86,43 @@ export default function Home() {
         className="w-full h-fit bg-blue-800 z-10 grid grid-cols-1 sm:grid-cols-2 p-5 pt-20"
         ref={welcomeRef}
       >
-        <div className="flex flex-col justify-center  pb-5 sm:pb-0 sm:gap-y-28 gap-y-5">
-          <h1 className=" text-black w-full font-syne text-3xl font-bold sm:text-5xl lg:text-8xl ">
-            Welcome home
-          </h1>
+        <div className="flex flex-col justify-center pl-10 pb-5 sm:pb-0 sm:gap-y-28 gap-y-5">
+          <div className=" ">
+            <h1 className=" text-black w-full font-syne text-3xl font-bold sm:text-5xl lg:text-7xl  ">
+              This is
+            </h1>
+            <TextType
+              text={["Home", "Family", "Dominion City"]}
+              typingSpeed={75}
+              pauseDuration={1500}
+              showCursor
+              cursorCharacter=""
+              texts={[
+                "Welcome to React Bits! Good to see you!",
+                "Build some amazing experiences!",
+              ]}
+              deletingSpeed={50}
+              variableSpeedEnabled={false}
+              variableSpeedMin={60}
+              variableSpeedMax={120}
+              cursorBlinkDuration={0.5}
+              variableSpeed={undefined}
+              onSentenceComplete={undefined}
+              className={` text-black w-full font-syne text-3xl font-bold sm:text-5xl lg:text-7xl`}
+            />
+          </div>
           <p className=" text-zinc-800 w-full font-syne ">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam
             dolorem quod accusantium exercitationem distinctio repudiandae?
           </p>
         </div>
         <div className="flex justify-center items-center ">
-          <div className="w-full h-fit sm:pl-32">
+          <div className="w-full h-fit lg:pl-32 md:pl-10 ">
             <div className="w-full h-full min-h-80 bg-blue-700 rounded-tl-[25em] rounded-b-[3.75em] sm:rounded-bl-none overflow-hidden">
               <Image
                 alt="image"
                 src={welcome}
-                className=" object-cover object-center -z-10  aspect-square"
+                className=" object-cover object-center -z-10  aspect-square    "
                 priority
               />
             </div>
