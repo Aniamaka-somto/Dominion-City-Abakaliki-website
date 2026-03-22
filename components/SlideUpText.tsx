@@ -2,55 +2,59 @@
 
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const SlideUpText = ({
+export default function MagicSlideUp({
   text,
   className = "",
-  delay = 0,
-  triggerRef = null,
-}) => {
+  timeline = null, // ✅ Accept parent timeline
+  delay = 0, // ✅ Position in timeline
+  stagger = 0.05,
+}) {
   const containerRef = useRef(null);
-  const words = text.split(" ");
+  const chars = Array.from(text);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Select all inner word spans
-      const wordSpans = containerRef.current.querySelectorAll(".word-inner");
+      const charSpans = containerRef.current.querySelectorAll(".char-inner");
 
-      // Animation Timeline
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: triggerRef || containerRef.current, // Use external trigger or self
-          start: "top 80%", // Adjust when it starts
-          toggleActions: "play none none reverse", // Play on enter, reverse on leave
-        },
-        delay: delay,
-      });
-
-      tl.from(wordSpans, {
-        y: "100%",
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1, // Time between each word
-        ease: "power3.out",
-      });
+      if (timeline) {
+        // ✅ Add to parent scroll timeline
+        timeline.from(
+          charSpans,
+          {
+            y: "100%",
+            opacity: 0,
+            duration: 0.8,
+            stagger: stagger,
+            ease: "power3.out",
+          },
+          delay,
+        );
+      } else {
+        // ✅ Fallback: Self-triggered animation
+        gsap.from(charSpans, {
+          y: "100%",
+          opacity: 0,
+          duration: 0.8,
+          stagger: stagger,
+          ease: "power3.out",
+          delay: delay,
+        });
+      }
     }, containerRef);
 
     return () => ctx.revert();
-  }, [text, delay, triggerRef]);
+  }, [text, timeline, delay, stagger]);
 
   return (
-    <h2 ref={containerRef} className={`inline-block ${className}`}>
-      {words.map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden mr-2 last:mr-0">
-          <span className="word-inner inline-block">{word}</span>
+    <div ref={containerRef} className={`flex flex-wrap ${className}`}>
+      {chars.map((char, i) => (
+        <span key={i} className="inline-block overflow-hidden">
+          <span className="char-inner inline-block">
+            {char === " " ? "\u00A0" : char}
+          </span>
         </span>
       ))}
-    </h2>
+    </div>
   );
-};
-
-export default SlideUpText;
+}

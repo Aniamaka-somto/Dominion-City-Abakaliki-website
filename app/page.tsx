@@ -46,43 +46,47 @@ export default function Home() {
           start: "top top",
           end: "bottom bottom",
           scrub: 1,
-          markers: true, // Keep this while testing
+          markers: true,
         },
       });
 
+      const loveChars = loveRef.current?.querySelectorAll(".char-inner");
+      const inChars = inRef.current?.querySelectorAll(".char-inner");
+      const actionChars = actionRef.current?.querySelectorAll(".char-inner");
+
       scrollTl
         .from(
-          loveRef.current,
+          loveChars,
           {
-            y: -200,
-            x: -100,
-            rotation: -15,
+            y: "100%",
             opacity: 0,
-            duration: 1,
+            duration: 0.8,
+            stagger: 0.08,
+            ease: "power3.out",
           },
           0,
         )
         .from(
-          inRef.current,
+          inChars,
           {
-            x: 200,
-            y: 100,
-            rotation: 10,
+            y: "100%",
             opacity: 0,
-            duration: 1,
+            duration: 0.8,
+            stagger: 0.08,
+            ease: "power3.out",
           },
-          0.7,
+          0.5,
         )
         .from(
-          actionRef.current,
+          actionChars,
           {
-            y: 200,
-            rotation: -5,
+            y: "100%",
             opacity: 0,
-            scale: 0.8,
-            duration: 1,
+            duration: 0.8,
+            stagger: 0.08,
+            ease: "power3.out",
           },
-          1.4,
+          1.0,
         )
         .from(
           centerContentRef.current,
@@ -91,7 +95,7 @@ export default function Home() {
             opacity: 0,
             duration: 1,
           },
-          2,
+          0,
         );
       ScrollTrigger.refresh();
     });
@@ -139,12 +143,7 @@ export default function Home() {
                 "Build some amazing experiences!",
               ]}
               deletingSpeed={50}
-              variableSpeedEnabled={false}
-              variableSpeedMin={60}
-              variableSpeedMax={120}
               cursorBlinkDuration={0.5}
-              variableSpeed={undefined}
-              onSentenceComplete={undefined}
               className={` text-black w-full font-syne text-3xl font-bold sm:text-5xl lg:text-7xl`}
             />
           </div>
@@ -168,31 +167,48 @@ export default function Home() {
       </div>
       <section ref={sectionRef} className="relative h-[200vh] bg-[#F0F0E8]">
         <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-          <SlideUpText
-            className="absolute top-[5%] -left-[5%] text-[15vw] font-bold uppercase text-[#111] leading-[0.8] whitespace-nowrap z-10"
-            text={"LOVE"}
-            triggerRef={loveRef}
-          />
+          {/* LOVE */}
+          <div
+            ref={loveRef}
+            className="absolute top-[5%] -left-[5%] text-[15vw] font-bold uppercase text-[#111] leading-[0.8] whitespace-nowrap z-10 font-oswald flex"
+          >
+            {["L", "O", "V", "E"].map((char, i) => (
+              <span key={i} className="inline-block overflow-hidden">
+                <span className="char-inner inline-block">{char}</span>
+              </span>
+            ))}
+          </div>
 
+          {/* IN */}
           <div
             ref={inRef}
-            className="absolute top-[40%] -right-[5%] text-[10vw] font-bold uppercase text-[#111] leading-[0.8] whitespace-nowrap z-10"
-            style={{ fontFamily: "'Oswald', sans-serif" }}
+            className="absolute top-[40%] -right-[5%] text-[10vw] font-bold uppercase text-[#111] leading-[0.8] whitespace-nowrap z-10 font-oswald flex"
           >
-            IN
+            {["I", "N"].map((char, i) => (
+              <span key={i} className="inline-block overflow-hidden">
+                <span className="char-inner inline-block">{char}</span>
+              </span>
+            ))}
           </div>
+
+          {/* ACTION */}
           <div
             ref={actionRef}
-            className="absolute -bottom-[5%] left-1/2 -translate-x-1/2 text-[18vw] font-bold uppercase text-[#111] leading-[0.8] whitespace-nowrap z-10"
-            style={{ fontFamily: "'Oswald', sans-serif" }}
+            className="absolute -bottom-[5%] left-1/2 -translate-x-1/2 text-[18vw] font-bold uppercase text-[#111] leading-[0.8] whitespace-nowrap z-10 font-oswald flex"
           >
-            ACTION
+            {["A", "C", "T", "I", "O", "N"].map((char, i) => (
+              <span key={i} className="inline-block overflow-hidden">
+                <span className="char-inner inline-block">{char}</span>
+              </span>
+            ))}
           </div>
+
+          {/* Center Content */}
           <div
             ref={centerContentRef}
-            className="relative z-20 text-center max-w-[600px] p-8 bg-[#F0F0E8]/80 backdrop-blur-sm rounded-[20px]"
+            className="relative z-20 text-center max-w-150 p-8 bg-[#F0F0E8]/80 backdrop-blur-sm rounded-[20px]"
           >
-            <span className="text-sm font-semibold tracking-[2px] uppercase mb-4 block">
+            <span className="text-sm font-semibold tracking-[2px] uppercase mb-4 block text-black">
               Our Mission Is
             </span>
             <h2 className="text-xl font-normal">LOVE IN ACTION</h2>
