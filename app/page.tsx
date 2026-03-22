@@ -45,147 +45,283 @@ export default function Home() {
         duration: 1.5,
         ease: "power3.inOut",
       });
-      const isMobile = window.innerWidth < 640;
+      const mm = gsap.matchMedia();
 
-      const scrollTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: isMobile ? "top 95%" : "top 60%",
-          end: "bottom bottom",
-          scrub: 1,
-          markers: true,
-        },
-      });
+      // ── Desktop / Tablet (≥ 768px) ───────────────────────────────────
+      mm.add("(min-width: 768px)", () => {
+        const scrollTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 60%",
+            end: "bottom bottom",
+            scrub: 1,
+            // markers: true, // ← uncomment only when debugging
+          },
+        });
 
-      // LOVE / IN / ACTION (your existing code)
-      const loveChars = loveRef.current?.querySelectorAll(".char-inner");
-      const inChars = inRef.current?.querySelectorAll(".char-inner");
-      const actionChars = actionRef.current?.querySelectorAll(".char-inner");
+        const loveChars = loveRef.current?.querySelectorAll(".char-inner");
+        const inChars = inRef.current?.querySelectorAll(".char-inner");
+        const actionChars = actionRef.current?.querySelectorAll(".char-inner");
 
-      scrollTl
-        .from(
-          loveChars,
-          {
-            y: "100%",
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.05,
-            ease: "power3.out",
-          },
-          0,
-        )
-        .from(
-          inChars,
-          {
-            y: "100%",
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.05,
-            ease: "power3.out",
-          },
-          0.5,
-        )
-        .from(
-          actionChars,
-          {
-            y: "100%",
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.05,
-            ease: "power3.out",
-          },
-          1.0,
+        const raisingChars = raisingRef.current?.querySelectorAll(
+          ".char-inner-mission",
+        );
+        const leadersChars = leadersRef.current?.querySelectorAll(
+          ".char-inner-mission",
+        );
+        const thatChars = thatRef.current?.querySelectorAll(
+          ".char-inner-mission",
+        );
+        const transformChars = transformRef.current?.querySelectorAll(
+          ".char-inner-mission",
+        );
+        const theChars = theRef.current?.querySelectorAll(
+          ".char-inner-mission",
+        );
+        const societyChars = societyRef.current?.querySelectorAll(
+          ".char-inner-mission",
         );
 
-      // ✅ NEW: Mission Words Animation (staggered overlap)
-      const raisingChars = raisingRef.current?.querySelectorAll(
-        ".char-inner-mission",
-      );
-      const leadersChars = leadersRef.current?.querySelectorAll(
-        ".char-inner-mission",
-      );
-      const thatChars = thatRef.current?.querySelectorAll(
-        ".char-inner-mission",
-      );
-      const transformChars = transformRef.current?.querySelectorAll(
-        ".char-inner-mission",
-      );
-      const societyChars = societyRef.current?.querySelectorAll(
-        ".char-inner-mission",
-      );
-      const theChars = theRef.current?.querySelectorAll(".char-inner-mission");
+        scrollTl
+          .from(
+            loveChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.8,
+              stagger: 0.05,
+              ease: "power3.out",
+            },
+            0,
+          )
+          .from(
+            inChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.8,
+              stagger: 0.05,
+              ease: "power3.out",
+            },
+            0.5,
+          )
+          .from(
+            actionChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.8,
+              stagger: 0.05,
+              ease: "power3.out",
+            },
+            1.0,
+          )
 
-      scrollTl
-        .from(
-          raisingChars,
-          {
-            y: "100%",
-            opacity: 0,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: "power3.out",
-          },
-          1.5,
-        ) // ✅ Starts right after ACTION begins
+          .from(
+            raisingChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.7,
+              stagger: 0.08,
+              ease: "power3.out",
+            },
+            1.5,
+          )
+          .from(
+            leadersChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.7,
+              stagger: 0.08,
+              ease: "power3.out",
+            },
+            1.9,
+          )
+          .from(
+            thatChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.5,
+              stagger: 0.08,
+              ease: "power3.out",
+            },
+            2.2,
+          )
+          .from(
+            transformChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.8,
+              stagger: 0.08,
+              ease: "power3.out",
+            },
+            2.4,
+          )
+          .from(
+            theChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.8,
+              stagger: 0.08,
+              ease: "power3.out",
+            },
+            2.8,
+          )
+          .from(
+            societyChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.9,
+              stagger: 0.08,
+              ease: "power3.out",
+            },
+            3.0,
+          );
+      });
 
-        .from(
-          leadersChars,
-          {
-            y: "100%",
-            opacity: 0,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: "power3.out",
+      // ── Mobile (< 768px) ─────────────────────────────────────────────
+      mm.add("(max-width: 767px)", () => {
+        const scrollTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 110%", // starts much earlier on mobile
+            end: "bottom bottom",
+            scrub: 1,
+            // markers: true,
           },
-          1.9,
-        ) // ✅ Overlaps with RAISING
+        });
 
-        .from(
-          thatChars,
-          {
-            y: "100%",
-            opacity: 0,
-            duration: 0.5,
-            stagger: 0.08,
-            ease: "power3.out",
-          },
-          2.2,
-        ) // ✅ Quick connector
+        const loveChars = loveRef.current?.querySelectorAll(".char-inner");
+        const inChars = inRef.current?.querySelectorAll(".char-inner");
+        const actionChars = actionRef.current?.querySelectorAll(".char-inner");
 
-        .from(
-          transformChars,
-          {
-            y: "100%",
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.08,
-            ease: "power3.out",
-          },
-          2.4,
-        ) // ✅ Overlaps with "that"
-        .from(
-          theChars,
-          {
-            y: "100%",
-            opacity: 0,
-            duration: 0.8,
-            stagger: 0.08,
-            ease: "power3.out",
-          },
-          2.8,
-        )
+        const raisingChars = raisingRef.current?.querySelectorAll(
+          ".char-inner-mission",
+        );
+        const leadersChars = leadersRef.current?.querySelectorAll(
+          ".char-inner-mission",
+        );
+        const thatChars = thatRef.current?.querySelectorAll(
+          ".char-inner-mission",
+        );
+        const transformChars = transformRef.current?.querySelectorAll(
+          ".char-inner-mission",
+        );
+        const theChars = theRef.current?.querySelectorAll(
+          ".char-inner-mission",
+        );
+        const societyChars = societyRef.current?.querySelectorAll(
+          ".char-inner-mission",
+        );
 
-        .from(
-          societyChars,
-          {
-            y: "100%",
-            opacity: 0,
-            duration: 0.9,
-            stagger: 0.08,
-            ease: "power3.out",
-          },
-          3,
-        ); // ✅ Hero word finale
+        scrollTl
+          .from(
+            loveChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.7,
+              stagger: 0.04,
+              ease: "power3.out",
+            },
+            0,
+          )
+          .from(
+            inChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.7,
+              stagger: 0.04,
+              ease: "power3.out",
+            },
+            0.4,
+          )
+          .from(
+            actionChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.7,
+              stagger: 0.04,
+              ease: "power3.out",
+            },
+            0.8,
+          )
+
+          .from(
+            raisingChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.6,
+              stagger: 0.06,
+              ease: "power3.out",
+            },
+            1.2,
+          )
+          .from(
+            leadersChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.6,
+              stagger: 0.06,
+              ease: "power3.out",
+            },
+            1.6,
+          )
+          .from(
+            thatChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.5,
+              stagger: 0.06,
+              ease: "power3.out",
+            },
+            1.9,
+          )
+          .from(
+            transformChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.7,
+              stagger: 0.06,
+              ease: "power3.out",
+            },
+            2.1,
+          )
+          .from(
+            theChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.7,
+              stagger: 0.06,
+              ease: "power3.out",
+            },
+            2.5,
+          )
+          .from(
+            societyChars,
+            {
+              y: "100%",
+              opacity: 0,
+              duration: 0.8,
+              stagger: 0.06,
+              ease: "power3.out",
+            },
+            2.7,
+          );
+      });
       ScrollTrigger.refresh();
     });
 
@@ -258,7 +394,7 @@ export default function Home() {
       </div>
       <section
         ref={sectionRef}
-        className="relative h-[300vh] md:h-[260vh] lg:h-[220vh] bg-white"
+        className="relative h-[180vh] md:h-[260vh] lg:h-[220vh] bg-white"
       >
         <div className="sticky top-0 h-screen sm:h-[110vh] w-full flex items-center justify-center overflow-hidden">
           {/* Label moved higher */}
