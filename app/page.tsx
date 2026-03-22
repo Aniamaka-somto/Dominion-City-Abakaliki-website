@@ -45,10 +45,12 @@ export default function Home() {
         duration: 1.5,
         ease: "power3.inOut",
       });
+      const isMobile = window.innerWidth < 640;
+
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 60%", // ✅ Starts earlier
+          start: isMobile ? "top 95%" : "top 60%",
           end: "bottom bottom",
           scrub: 1,
           markers: true,
@@ -191,7 +193,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col bg-blue-800 font-sans ">
+    <div className="flex min-h-screen flex-col bg-blue-900 font-sans ">
       <header
         className="flex h-screen w-full flex-col   bg-bottom bg-cover bg-no-repeat  justify-end items-center  lg:pb-10 bg-[url('@/public/header.jpg')]"
         ref={boxRef}
@@ -209,14 +211,14 @@ export default function Home() {
           </div>
         </div>
       </header>
-      <div className="h-fit w-fit bg-[#F0F0E8]">
+      <div className="h-fit w-fit bg-white">
         <div
-          className="w-full h-fit bg-blue-800 z-10 grid grid-cols-1 sm:grid-cols-2 p-5 pt-20 rounded-b-[90px] "
+          className="w-full h-fit bg-blue-900 z-10 grid grid-cols-1 sm:grid-cols-2 p-5 pt-20 sm:rounded-b-[90px] rounded-b-[45px] "
           ref={welcomeRef}
         >
           <div className="flex flex-col justify-center sm:pl-10 pb-5 sm:pb-0 sm:gap-y-28 gap-y-5">
             <div className=" ">
-              <h1 className=" text-black w-full font-syne text-3xl font-bold sm:text-5xl lg:text-7xl  ">
+              <h1 className=" text-white w-full font-syne text-3xl font-bold sm:text-5xl lg:text-7xl  ">
                 This is
               </h1>
               <TextType
@@ -231,10 +233,10 @@ export default function Home() {
                 ]}
                 deletingSpeed={50}
                 cursorBlinkDuration={0.5}
-                className={` text-black w-full font-syne text-3xl font-bold sm:text-5xl lg:text-7xl`}
+                className={` text-white w-full font-syne text-3xl font-bold sm:text-5xl lg:text-7xl`}
               />
             </div>
-            <p className=" text-zinc-800 w-full font-syne ">
+            <p className=" text-zinc-300 w-full font-syne ">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam
               dolorem quod accusantium exercitationem distinctio repudiandae?
             </p>
@@ -256,7 +258,7 @@ export default function Home() {
       </div>
       <section
         ref={sectionRef}
-        className="relative h-[300vh] md:h-[260vh] lg:h-[220vh] bg-[#F0F0E8]"
+        className="relative h-[300vh] md:h-[260vh] lg:h-[220vh] bg-white"
       >
         <div className="sticky top-0 h-screen sm:h-[110vh] w-full flex items-center justify-center overflow-hidden">
           {/* Label moved higher */}
@@ -278,7 +280,7 @@ export default function Home() {
             {/* RAISING */}
             <div
               ref={raisingRef}
-              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-[#111] font-syne leading-[0.82] tracking-[-0.025em]"
+              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-blue-800 font-syne leading-[0.82] tracking-[-0.025em]"
             >
               {["R", "A", "I", "S", "I", "N", "G"].map((c, i) => (
                 <span key={i} className="inline-block overflow-hidden">
@@ -292,7 +294,7 @@ export default function Home() {
             {/* LEADERS */}
             <div
               ref={leadersRef}
-              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-[#111] font-syne leading-[0.82] tracking-[-0.025em]"
+              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-blue-900 font-syne leading-[0.82] tracking-[-0.025em]"
             >
               {["L", "E", "A", "D", "E", "R", "S"].map((c, i) => (
                 <span key={i} className="inline-block overflow-hidden">
@@ -306,7 +308,7 @@ export default function Home() {
             {/* THAT */}
             <div
               ref={thatRef}
-              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-[#111] font-syne leading-[0.82] tracking-[-0.025em]"
+              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-blue-800 font-syne leading-[0.82] tracking-[-0.025em]"
             >
               {["T", "H", "A", "T"].map((c, i) => (
                 <span key={i} className="inline-block overflow-hidden">
@@ -320,7 +322,7 @@ export default function Home() {
             {/* TRANSFORM */}
             <div
               ref={transformRef}
-              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-[#111] font-syne leading-[0.82] tracking-[-0.025em]"
+              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-blue-800 font-syne leading-[0.82] tracking-[-0.025em]"
             >
               {["T", "R", "A", "N", "S", "F", "O", "R", "M"].map((c, i) => (
                 <span key={i} className="inline-block overflow-hidden">
@@ -334,7 +336,7 @@ export default function Home() {
             {/* THE */}
             <div
               ref={theRef}
-              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-[#111] font-syne leading-[0.82] tracking-[-0.025em]"
+              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-blue-800 font-syne leading-[0.82] tracking-[-0.025em]"
             >
               {["T", "H", "E"].map((c, i) => (
                 <span key={i} className="inline-block overflow-hidden">
@@ -348,7 +350,7 @@ export default function Home() {
             {/* SOCIETY – slightly bigger for emphasis */}
             <div
               ref={societyRef}
-              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-[#111] font-syne leading-[0.82] tracking-[-0.025em]"
+              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-blue-800 font-syne leading-[0.82] tracking-[-0.025em]"
             >
               {["S", "O", "C", "I", "E", "T", "Y"].map((c, i) => (
                 <span key={i} className="inline-block overflow-hidden">
