@@ -23,7 +23,12 @@ export default function Home() {
   const inRef = useRef(null);
   const actionRef = useRef(null);
   const centerContentRef = useRef(null);
-
+  const raisingRef = useRef(null);
+  const leadersRef = useRef(null);
+  const thatRef = useRef(null);
+  const transformRef = useRef(null);
+  const societyRef = useRef(null);
+  const theRef = useRef(null);
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.to(boxRef.current, {
@@ -43,13 +48,14 @@ export default function Home() {
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top top",
+          start: "top 60%", // ✅ Starts earlier
           end: "bottom bottom",
           scrub: 1,
           markers: true,
         },
       });
 
+      // LOVE / IN / ACTION (your existing code)
       const loveChars = loveRef.current?.querySelectorAll(".char-inner");
       const inChars = inRef.current?.querySelectorAll(".char-inner");
       const actionChars = actionRef.current?.querySelectorAll(".char-inner");
@@ -61,7 +67,7 @@ export default function Home() {
             y: "100%",
             opacity: 0,
             duration: 0.8,
-            stagger: 0.08,
+            stagger: 0.05,
             ease: "power3.out",
           },
           0,
@@ -72,7 +78,7 @@ export default function Home() {
             y: "100%",
             opacity: 0,
             duration: 0.8,
-            stagger: 0.08,
+            stagger: 0.05,
             ease: "power3.out",
           },
           0.5,
@@ -83,20 +89,101 @@ export default function Home() {
             y: "100%",
             opacity: 0,
             duration: 0.8,
-            stagger: 0.08,
+            stagger: 0.05,
             ease: "power3.out",
           },
           1.0,
-        )
-        .from(
-          centerContentRef.current,
-          {
-            y: 50,
-            opacity: 0,
-            duration: 1,
-          },
-          0,
         );
+
+      // ✅ NEW: Mission Words Animation (staggered overlap)
+      const raisingChars = raisingRef.current?.querySelectorAll(
+        ".char-inner-mission",
+      );
+      const leadersChars = leadersRef.current?.querySelectorAll(
+        ".char-inner-mission",
+      );
+      const thatChars = thatRef.current?.querySelectorAll(
+        ".char-inner-mission",
+      );
+      const transformChars = transformRef.current?.querySelectorAll(
+        ".char-inner-mission",
+      );
+      const societyChars = societyRef.current?.querySelectorAll(
+        ".char-inner-mission",
+      );
+      const theChars = theRef.current?.querySelectorAll(".char-inner-mission");
+
+      scrollTl
+        .from(
+          raisingChars,
+          {
+            y: "100%",
+            opacity: 0,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: "power3.out",
+          },
+          1.5,
+        ) // ✅ Starts right after ACTION begins
+
+        .from(
+          leadersChars,
+          {
+            y: "100%",
+            opacity: 0,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: "power3.out",
+          },
+          1.9,
+        ) // ✅ Overlaps with RAISING
+
+        .from(
+          thatChars,
+          {
+            y: "100%",
+            opacity: 0,
+            duration: 0.5,
+            stagger: 0.08,
+            ease: "power3.out",
+          },
+          2.2,
+        ) // ✅ Quick connector
+
+        .from(
+          transformChars,
+          {
+            y: "100%",
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.08,
+            ease: "power3.out",
+          },
+          2.4,
+        ) // ✅ Overlaps with "that"
+        .from(
+          theChars,
+          {
+            y: "100%",
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.08,
+            ease: "power3.out",
+          },
+          2.8,
+        )
+
+        .from(
+          societyChars,
+          {
+            y: "100%",
+            opacity: 0,
+            duration: 0.9,
+            stagger: 0.08,
+            ease: "power3.out",
+          },
+          3,
+        ); // ✅ Hero word finale
       ScrollTrigger.refresh();
     });
 
@@ -122,96 +209,155 @@ export default function Home() {
           </div>
         </div>
       </header>
-
-      <div
-        className="w-full h-fit bg-blue-800 z-10 grid grid-cols-1 sm:grid-cols-2 p-5 pt-20"
-        ref={welcomeRef}
-      >
-        <div className="flex flex-col justify-center sm:pl-10 pb-5 sm:pb-0 sm:gap-y-28 gap-y-5">
-          <div className=" ">
-            <h1 className=" text-black w-full font-syne text-3xl font-bold sm:text-5xl lg:text-7xl  ">
-              This is
-            </h1>
-            <TextType
-              text={["Home", "Family", "Dominion City"]}
-              typingSpeed={75}
-              pauseDuration={1500}
-              showCursor
-              cursorCharacter=""
-              texts={[
-                "Welcome to React Bits! Good to see you!",
-                "Build some amazing experiences!",
-              ]}
-              deletingSpeed={50}
-              cursorBlinkDuration={0.5}
-              className={` text-black w-full font-syne text-3xl font-bold sm:text-5xl lg:text-7xl`}
-            />
-          </div>
-          <p className=" text-zinc-800 w-full font-syne ">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam
-            dolorem quod accusantium exercitationem distinctio repudiandae?
-          </p>
-        </div>
-        <div className="flex justify-center items-center ">
-          <div className="w-full h-fit lg:pl-32 md:pl-10 ">
-            <div className="w-full h-full min-h-80 bg-blue-700 rounded-tl-[25em] rounded-b-[3.75em] sm:rounded-bl-none overflow-hidden">
-              <Image
-                alt="image"
-                src={welcome}
-                className=" object-cover object-center -z-10  aspect-square    "
-                priority
+      <div className="h-fit w-fit bg-[#F0F0E8]">
+        <div
+          className="w-full h-fit bg-blue-800 z-10 grid grid-cols-1 sm:grid-cols-2 p-5 pt-20 rounded-b-[90px] "
+          ref={welcomeRef}
+        >
+          <div className="flex flex-col justify-center sm:pl-10 pb-5 sm:pb-0 sm:gap-y-28 gap-y-5">
+            <div className=" ">
+              <h1 className=" text-black w-full font-syne text-3xl font-bold sm:text-5xl lg:text-7xl  ">
+                This is
+              </h1>
+              <TextType
+                text={["Home", "Family", "Dominion City"]}
+                typingSpeed={75}
+                pauseDuration={1500}
+                showCursor
+                cursorCharacter=""
+                texts={[
+                  "Welcome to React Bits! Good to see you!",
+                  "Build some amazing experiences!",
+                ]}
+                deletingSpeed={50}
+                cursorBlinkDuration={0.5}
+                className={` text-black w-full font-syne text-3xl font-bold sm:text-5xl lg:text-7xl`}
               />
+            </div>
+            <p className=" text-zinc-800 w-full font-syne ">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam
+              dolorem quod accusantium exercitationem distinctio repudiandae?
+            </p>
+          </div>
+
+          <div className="flex justify-center items-center ">
+            <div className="w-full h-fit lg:pl-32 md:pl-10 ">
+              <div className="w-full h-full min-h-80 bg-blue-700 rounded-tl-[25em] rounded-b-[3.75em] sm:rounded-bl-none overflow-hidden">
+                <Image
+                  alt="image"
+                  src={welcome}
+                  className=" object-cover object-center -z-10  aspect-square    "
+                  priority
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <section ref={sectionRef} className="relative h-[200vh] bg-[#F0F0E8]">
-        <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-          {/* LOVE */}
-          <div
-            ref={loveRef}
-            className="absolute top-[5%] -left-[5%] text-[15vw] font-bold uppercase text-[#111] leading-[0.8] whitespace-nowrap z-10 font-oswald flex"
-          >
-            {["L", "O", "V", "E"].map((char, i) => (
-              <span key={i} className="inline-block overflow-hidden">
-                <span className="char-inner inline-block">{char}</span>
-              </span>
-            ))}
-          </div>
+      <section
+        ref={sectionRef}
+        className="relative h-[300vh] md:h-[260vh] lg:h-[220vh] bg-[#F0F0E8]"
+      >
+        <div className="sticky top-0 h-screen sm:h-[110vh] w-full flex items-center justify-center overflow-hidden">
+          {/* Label moved higher */}
+          <p className="absolute top-6 md:top-8 lg:top-10 left-1/2 -translate-x-1/2 text-xs md:text-sm font-semibold tracking-[4px] uppercase text-gray-600 z-30 pointer-events-none sm:mb-10">
+            Our Mission Is
+          </p>
 
-          {/* IN */}
+          {/* Main content wrapper – centered, constrained height, tight spacing */}
           <div
-            ref={inRef}
-            className="absolute top-[40%] -right-[5%] text-[10vw] font-bold uppercase text-[#111] leading-[0.8] whitespace-nowrap z-10 font-oswald flex"
-          >
-            {["I", "N"].map((char, i) => (
-              <span key={i} className="inline-block overflow-hidden">
-                <span className="char-inner inline-block">{char}</span>
-              </span>
-            ))}
-          </div>
+            className="
+        relative text-center px-4 sm:px-6 md:px-8 lg:px-10 
+        max-w-[95vw] md:max-w-5xl 
+        flex flex-col items-center justify-center 
+        gap-1 sm:gap-0.5 md:gap-0 
+        min-h-[75vh] md:min-h-[70vh] lg:min-h-[65vh]
 
-          {/* ACTION */}
-          <div
-            ref={actionRef}
-            className="absolute -bottom-[5%] left-1/2 -translate-x-1/2 text-[18vw] font-bold uppercase text-[#111] leading-[0.8] whitespace-nowrap z-10 font-oswald flex"
+      "
           >
-            {["A", "C", "T", "I", "O", "N"].map((char, i) => (
-              <span key={i} className="inline-block overflow-hidden">
-                <span className="char-inner inline-block">{char}</span>
-              </span>
-            ))}
-          </div>
+            {/* RAISING */}
+            <div
+              ref={raisingRef}
+              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-[#111] font-syne leading-[0.82] tracking-[-0.025em]"
+            >
+              {["R", "A", "I", "S", "I", "N", "G"].map((c, i) => (
+                <span key={i} className="inline-block overflow-hidden">
+                  <span className="char-inner-mission inline-block will-change-transform">
+                    {c}
+                  </span>
+                </span>
+              ))}
+            </div>
 
-          {/* Center Content */}
-          <div
-            ref={centerContentRef}
-            className="relative z-20 text-center max-w-150 p-8 bg-[#F0F0E8]/80 backdrop-blur-sm rounded-[20px]"
-          >
-            <span className="text-sm font-semibold tracking-[2px] uppercase mb-4 block text-black">
-              Our Mission Is
-            </span>
-            <h2 className="text-xl font-normal">LOVE IN ACTION</h2>
+            {/* LEADERS */}
+            <div
+              ref={leadersRef}
+              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-[#111] font-syne leading-[0.82] tracking-[-0.025em]"
+            >
+              {["L", "E", "A", "D", "E", "R", "S"].map((c, i) => (
+                <span key={i} className="inline-block overflow-hidden">
+                  <span className="char-inner-mission inline-block will-change-transform">
+                    {c}
+                  </span>
+                </span>
+              ))}
+            </div>
+
+            {/* THAT */}
+            <div
+              ref={thatRef}
+              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-[#111] font-syne leading-[0.82] tracking-[-0.025em]"
+            >
+              {["T", "H", "A", "T"].map((c, i) => (
+                <span key={i} className="inline-block overflow-hidden">
+                  <span className="char-inner-mission inline-block will-change-transform">
+                    {c}
+                  </span>
+                </span>
+              ))}
+            </div>
+
+            {/* TRANSFORM */}
+            <div
+              ref={transformRef}
+              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-[#111] font-syne leading-[0.82] tracking-[-0.025em]"
+            >
+              {["T", "R", "A", "N", "S", "F", "O", "R", "M"].map((c, i) => (
+                <span key={i} className="inline-block overflow-hidden">
+                  <span className="char-inner-mission inline-block will-change-transform">
+                    {c}
+                  </span>
+                </span>
+              ))}
+            </div>
+
+            {/* THE */}
+            <div
+              ref={theRef}
+              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-[#111] font-syne leading-[0.82] tracking-[-0.025em]"
+            >
+              {["T", "H", "E"].map((c, i) => (
+                <span key={i} className="inline-block overflow-hidden">
+                  <span className="char-inner-mission inline-block will-change-transform">
+                    {c}
+                  </span>
+                </span>
+              ))}
+            </div>
+
+            {/* SOCIETY – slightly bigger for emphasis */}
+            <div
+              ref={societyRef}
+              className="text-[clamp(2.6rem,8vw,6.2rem)] font-bold uppercase text-[#111] font-syne leading-[0.82] tracking-[-0.025em]"
+            >
+              {["S", "O", "C", "I", "E", "T", "Y"].map((c, i) => (
+                <span key={i} className="inline-block overflow-hidden">
+                  <span className="char-inner-mission inline-block will-change-transform">
+                    {c}
+                  </span>
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>

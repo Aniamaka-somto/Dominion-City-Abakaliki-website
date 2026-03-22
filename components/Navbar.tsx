@@ -34,7 +34,7 @@ export default function Navbar() {
           // style={{ width: "50px", height: "50px", objectFit: "contain" }}
         />
       </div>
-      <div className="flex rounded-full shadow-lg sm:w-[9.3rem] w-24 max-w-274.75 sm:h-14 bg-white justify-evenly items-center text-black cursor-pointer text-xs sm:text-lg h-10">
+      <div className="flex rounded-full shadow-lg sm:w-[9.3rem] w-24 max-w-274.75 sm:h-14 bg-white justify-evenly items-center text-black cursor-pointer text-xs sm:text-lg h-10 font-syne">
         MENU
         <Menu />
       </div>
