@@ -3,7 +3,7 @@
 import Image from "next/image";
 import congregation from "@/public/header.jpg";
 import { gsap } from "gsap";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useLayoutEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import welcome from "@/public/welcome home.jpg";
@@ -29,6 +29,9 @@ export default function Home() {
   const transformRef = useRef(null);
   const societyRef = useRef(null);
   const theRef = useRef(null);
+  const circleRef = useRef(null); // NEW — for the circle SVG path
+  const wavyRef = useRef(null);
+  const textContainerRef = useRef(null);
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.to(boxRef.current, {
@@ -322,11 +325,84 @@ export default function Home() {
             2.7,
           );
       });
+      // ── Scroll Line Animation ───────────────────────────────────
+
       ScrollTrigger.refresh();
     });
 
     return () => ctx.revert();
   }, []);
+  // useLayoutEffect(() => {
+  //   const circle = document.getElementById("leaders-circle");
+  //   const wavy = document.getElementById("transform-wavy");
+  //   const svg = document.getElementById("doodle-svg");
+
+  //   if (
+  //     !circle ||
+  //     !wavy ||
+  //     !svg ||
+  //     !leadersRef.current ||
+  //     !transformRef.current
+  //   )
+  //     return;
+
+  //   const svgRect = svg.getBoundingClientRect();
+
+  //   // LEADERS — pixel coords relative to SVG
+  //   const leadersRect = leadersRef.current.getBoundingClientRect();
+  //   const cx = leadersRect.left - svgRect.left + leadersRect.width / 2;
+  //   const cy = leadersRect.top - svgRect.top + leadersRect.height / 2;
+  //   const rx = leadersRect.width / 2 + 20;
+  //   const ry = leadersRect.height / 2 + 10;
+
+  //   circle.setAttribute("cx", cx);
+  //   circle.setAttribute("cy", cy);
+  //   circle.setAttribute("rx", rx);
+  //   circle.setAttribute("ry", ry);
+
+  //   // TRANSFORM — wavy underline in pixel coords
+  //   const transformRect = transformRef.current.getBoundingClientRect();
+  //   const wavyY = transformRect.bottom - svgRect.top - 7;
+  //   const wavyLeft = transformRect.left - svgRect.left;
+  //   const wavyRight = transformRect.right - svgRect.left;
+
+  //   const segments = 6;
+  //   const segWidth = (wavyRight - wavyLeft) / segments;
+  //   let d = `M ${wavyLeft},${wavyY}`;
+  //   for (let i = 0; i < segments; i++) {
+  //     const x1 = wavyLeft + i * segWidth + segWidth * 0.25;
+  //     const x2 = wavyLeft + i * segWidth + segWidth * 0.75;
+  //     const xEnd = wavyLeft + (i + 1) * segWidth;
+  //     d += ` C ${x1},${wavyY - 10} ${x2},${wavyY + 10} ${xEnd},${wavyY}`;
+  //   }
+  //   wavy.setAttribute("d", d);
+
+  //   // Dasharray
+  //   const circleLength = 2 * Math.PI * Math.sqrt((rx ** 2 + ry ** 2) / 2);
+  //   circle.style.strokeDasharray = circleLength;
+  //   circle.style.strokeDashoffset = circleLength;
+
+  //   const wavyLength = wavy.getTotalLength();
+  //   wavy.style.strokeDasharray = wavyLength;
+  //   wavy.style.strokeDashoffset = wavyLength;
+
+  //   // GSAP animation
+  //   const ctx = gsap.context(() => {
+  //     gsap
+  //       .timeline({
+  //         scrollTrigger: {
+  //           trigger: sectionRef.current,
+  //           start: "top 80%",
+  //           end: "bottom bottom",
+  //           scrub: 2,
+  //         },
+  //       })
+  //       .to(circle, { strokeDashoffset: 0, duration: 1.2, ease: "none" }, 0)
+  //       .to(wavy, { strokeDashoffset: 0, duration: 1, ease: "none" }, 0.8);
+  //   });
+
+  //   return () => ctx.revert();
+  // }, []);
 
   return (
     <div className="flex min-h-screen flex-col bg-blue-900 font-sans ">
@@ -398,7 +474,7 @@ export default function Home() {
       >
         <div className="sticky top-0 h-screen sm:h-[110vh] w-full flex items-center justify-center overflow-hidden">
           {/* Label moved higher */}
-          <p className="absolute top-6 md:top-8 lg:top-10 left-1/2 -translate-x-1/2 text-xs md:text-sm font-semibold tracking-[4px] uppercase text-gray-600 z-30 pointer-events-none sm:mb-10">
+          <p className="absolute top-6 md:top-8 lg:top-10 left-1/2 -translate-x-1/2 text-xs md:text-sm font-semibold tracking-[4px] uppercase text-gray-600 z-30 pointer-events-none sm:mb-10 font-syne">
             Our Mission Is
           </p>
 
@@ -412,7 +488,41 @@ export default function Home() {
         min-h-[75vh] md:min-h-[70vh] lg:min-h-[65vh]
 
       "
+            ref={textContainerRef}
           >
+            {/* <svg
+              id="doodle-svg"
+              className="absolute inset-0 h-full w-full pointer-events-none z-10 overflow-visible"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient
+                  id="accentGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop offset="0%" stopColor="#06b6d4" />
+                  <stop offset="100%" stopColor="#1e3a8a" />
+                </linearGradient>
+              </defs>
+              <ellipse
+                id="leaders-circle"
+                fill="none"
+                stroke="url(#accentGradient)"
+                strokeWidth="6"
+                strokeLinecap="round"
+              />
+              <path
+                id="transform-wavy"
+                d=""
+                fill="none"
+                stroke="url(#accentGradient)"
+                strokeWidth="6"
+                strokeLinecap="round"
+              />
+            </svg> */}
             {/* RAISING */}
             <div
               ref={raisingRef}
@@ -498,6 +608,29 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+      <section className="h-fit w-full bg-white">
+        <section className="h-screen w-full flex justify-center px-6 pt-14 bg-blue-900 rounded-t-[45px] sm:rounded-t-[90px]">
+          <h2
+            className="text-[clamp(2.6rem,5vw,6.2rem)] font-bold uppercase font-syne leading-[0.85] tracking-[-0.02em] text-center bg-clip-text text-transparent"
+            style={{
+              backgroundImage:
+                "linear-gradient(135deg, #a8d0ff 0%, #e8dfc0 22%, #f5f0d0 40%, #c0d8f8 58%, #d0c0f0 75%, #a8d0ff 100%)",
+              backgroundSize: "200% 200%",
+              animation: "holoshimmer 5s ease infinite",
+            }}
+          >
+            How we do Church
+          </h2>
+
+          <style>{`
+    @keyframes holoshimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  `}</style>
+        </section>
       </section>
     </div>
   );
