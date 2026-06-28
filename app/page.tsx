@@ -411,14 +411,14 @@ export default function Home() {
         ref={boxRef}
       >
         <div
-          className="h-48  w-full lg:w-3/4 ring-2 rounded-4xl bg-blue-100 flex sm:justify-between items-center justify-center "
+          className="h-48  w-full lg:w-3/4 rounded-4xl bg-white ring-white flex sm:justify-between items-center justify-center "
           ref={box2Ref}
         >
-          <div className=" relative h-11 w-11 rounded-full ring-black ring-2 -translate-x-5 bg-white text-black flex justify-center items-center">
+          <div className=" relative h-11 w-11 rounded-full ring-white ring-2 -translate-x-5   text-white bg-blue-900 flex justify-center items-center">
             <ArrowLeft />
           </div>
           <div className=""></div>
-          <div className="h-11 w-11 rounded-full ring-black ring-2 translate-x-5 bg-white text-black flex justify-center items-center">
+          <div className="h-11 w-11 rounded-full ring-white ring-2 translate-x-5 text-white  bg-blue-900 flex justify-center items-center">
             <ArrowRight />
           </div>
         </div>

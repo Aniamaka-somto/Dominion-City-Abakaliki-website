@@ -155,7 +155,7 @@ export default function Navbar() {
           onClick={() => {
             if (!isAnimating.current) setOpen((v) => !v);
           }}
-          className="relative z-[60] flex h-10 w-24 sm:h-14 sm:w-[9.3rem] items-center justify-center rounded-full bg-white shadow-lg"
+          className="relative z-60 flex h-10 w-24 sm:h-14 sm:w-[9.3rem] items-center justify-center rounded-full bg-white shadow-lg"
         >
           <span className="font-syne text-xs sm:text-lg text-blue-900 mr-2 sm:mr-4">
             {open ? "CLOSE" : "MENU"}
@@ -164,11 +164,11 @@ export default function Navbar() {
           {/* The Icon Container */}
           <div className="relative h-4 w-5 sm:h-5 sm:w-6">
             {/* Top Bar */}
-            <span className="icon-bar absolute top-0 left-0 h-[2px] w-full bg-blue-900"></span>
+            <span className="icon-bar absolute top-0 left-0 h-0.5 w-full bg-blue-900"></span>
             {/* Middle Bar */}
-            <span className="icon-bar absolute top-[50%] left-0 h-[2px] w-full bg-blue-900 -translate-y-[50%]"></span>
+            <span className="icon-bar absolute top-[50%] left-0 h-0.5 w-full bg-blue-900 -translate-y-[50%]"></span>
             {/* Bottom Bar */}
-            <span className="icon-bar absolute bottom-0 left-0 h-[2px] w-full bg-blue-900"></span>
+            <span className="icon-bar absolute bottom-0 left-0 h-0.5 w-full bg-blue-900"></span>
           </div>
         </button>
       </div>
