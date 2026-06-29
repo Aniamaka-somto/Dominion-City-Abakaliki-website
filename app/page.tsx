@@ -9,6 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import welcome from "@/public/welcome home.jpg";
 import TextType from "@/components/TextType";
 import SlideUpText from "@/components/SlideUpText";
+import ServiceBar from "@/components/BottomBar";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
@@ -632,6 +633,7 @@ export default function Home() {
   `}</style>
         </section>
       </section>
+      <ServiceBar />
     </div>
   );
 }
