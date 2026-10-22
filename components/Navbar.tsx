@@ -7,11 +7,12 @@ import { gsap } from "gsap";
 import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
-  { label: "Home", href: "#" },
-  { label: "About", href: "#" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
   { label: "Services", href: "#" },
   { label: "Give", href: "#" },
   { label: "Contact", href: "#" },
+  { label: "Events", href: "#" },
 ];
 
 export default function Navbar() {
@@ -190,7 +191,7 @@ export default function Navbar() {
                   key={link.label}
                   className="border-b border-white/10 lg:border-none"
                 >
-                  <span className="link-mask py-2 sm:py-4">
+                  <span className="link-mask py-2 sm:py-1">
                     <a
                       href={link.href}
                       ref={(el) => {
