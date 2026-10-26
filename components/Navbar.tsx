@@ -4,16 +4,7 @@ import Image from "next/image";
 import DCLogo from "@/public/DC logo.png";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import { Menu, X } from "lucide-react";
-
-const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Services", href: "#" },
-  { label: "Give", href: "#" },
-  { label: "Contact", href: "#" },
-  { label: "Events", href: "#" },
-];
+import { NAV_LINKS, site } from "@/lib/site";
 
 export default function Navbar() {
   const boxRef = useRef<HTMLDivElement>(null);
@@ -214,12 +205,12 @@ export default function Navbar() {
             <div className="space-y-8 font-syne">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.2em] text-blue-300 mb-2">
-                  Location
+                  {site.location.label}
                 </p>
                 <p className="text-lg leading-tight">
-                  Dominion City HQ,
+                  {site.location.lines[0]},
                   <br />
-                  Nigeria
+                  {site.location.lines[1]}
                 </p>
               </div>
               <div>
@@ -227,10 +218,10 @@ export default function Navbar() {
                   Connect
                 </p>
                 <div className="flex gap-6 text-sm font-bold uppercase tracking-widest">
-                  <a href="#" className="hover:text-blue-300">
+                  <a href={site.social.instagram} className="hover:text-blue-300">
                     Instagram
                   </a>
-                  <a href="#" className="hover:text-blue-300">
+                  <a href={site.social.youtube} className="hover:text-blue-300">
                     YouTube
                   </a>
                 </div>
@@ -246,7 +237,7 @@ export default function Navbar() {
                 Get in touch →
               </a>
               <span className="text-center lg:text-left font-syne text-[10px] uppercase tracking-widest text-blue-300">
-                © 2026 Dominion City. All rights reserved.
+                {site.copyright}
               </span>
             </div>
           </div>

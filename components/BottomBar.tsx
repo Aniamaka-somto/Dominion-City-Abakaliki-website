@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { Fragment, useEffect, useState, useRef } from "react";
+import { MARQUEE_TEXT, SERVICE_TIMES } from "@/lib/site";
 
 interface ServiceBarProps {
   isLive?: boolean;
@@ -35,24 +36,19 @@ const ServiceInfo = () => (
     <span className="text-xs font-medium uppercase tracking-wide whitespace-nowrap">
       Sunday services
     </span>
-    <Divider />
-    <span className="text-xs font-medium uppercase tracking-wide whitespace-nowrap">
-      9AM
-    </span>
-    <Divider />
-    <span className="text-xs font-medium uppercase tracking-wide whitespace-nowrap">
-      11.30AM
-    </span>
-    <Divider />
-    <span className="text-xs font-medium uppercase tracking-wide whitespace-nowrap">
-      5PM (once a month)
-    </span>
+    {SERVICE_TIMES.map((time) => (
+      <Fragment key={time}>
+        <Divider />
+        <span className="text-xs font-medium uppercase tracking-wide whitespace-nowrap">
+          {time}
+        </span>
+      </Fragment>
+    ))}
   </div>
 );
 
 const Marquee = ({ className = "" }: { className?: string }) => {
-  const marqueeText =
-    "FIND OUT WHAT IS GOING ON AT SOUL CHURCH — FIND OUT WHAT IS GOING ON AT SOUL CHURCH";
+  const marqueeText = MARQUEE_TEXT;
 
   return (
     <div
@@ -149,16 +145,6 @@ export default function ServiceBar({ isLive = false }: ServiceBarProps) {
           <Marquee />
         </div>
       </div>
-
-      <style>{`
-        @keyframes marquee-scroll {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        .marquee-track {
-          animation: marquee-scroll 18s linear infinite;
-        }
-      `}</style>
     </>
   );
 }

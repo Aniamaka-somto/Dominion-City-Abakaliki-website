@@ -4,11 +4,50 @@ import {
   useEffect,
   useRef,
   useState,
-  createElement,
   useMemo,
   useCallback,
 } from "react";
 import { gsap } from "gsap";
+
+export interface TextTypeProps
+  extends Omit<React.ComponentPropsWithoutRef<"div">, "children"> {
+  /** The text (or list of texts) to type out. */
+  text: string | readonly string[];
+  /** Element to render. */
+  as?: keyof React.JSX.IntrinsicElements;
+  /** Milliseconds between keystrokes. */
+  typingSpeed?: number;
+  /** Milliseconds before typing starts. */
+  initialDelay?: number;
+  /** Milliseconds to hold a completed sentence before deleting. */
+  pauseDuration?: number;
+  /** Milliseconds between deletions. */
+  deletingSpeed?: number;
+  /** Loop through the text list forever. */
+  loop?: boolean;
+  /** Show the blinking cursor. */
+  showCursor?: boolean;
+  /** Hide the cursor while typing. */
+  hideCursorWhileTyping?: boolean;
+  /** The character used for the cursor. */
+  cursorCharacter?: string;
+  /** Classes for the cursor span. */
+  cursorClassName?: string;
+  /** Seconds for one cursor blink cycle. */
+  cursorBlinkDuration?: number;
+  /** Per-text colours. Falls back to `inherit` when empty. */
+  textColors?: string[];
+  /** Randomise the typing speed between these bounds. */
+  variableSpeed?: { min: number; max: number };
+  /** Called when a sentence finishes typing. */
+  onSentenceComplete?: (text: string, index: number) => void;
+  /** Wait until the element scrolls into view before typing. */
+  startOnVisible?: boolean;
+  /** Type the text in reverse. */
+  reverseMode?: boolean;
+  /** Classes for the wrapper element. */
+  className?: string;
+}
 
 const TextType = ({
   text,
@@ -30,17 +69,17 @@ const TextType = ({
   startOnVisible = false,
   reverseMode = false,
   ...props
-}) => {
+}: TextTypeProps) => {
   const [displayedText, setDisplayedText] = useState("");
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(!startOnVisible);
-  const cursorRef = useRef(null);
-  const containerRef = useRef(null);
+  const cursorRef = useRef<HTMLSpanElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const textArray = useMemo(
-    () => (Array.isArray(text) ? text : [text]),
+  const textArray = useMemo<string[]>(
+    () => (Array.isArray(text) ? [...text] : [text as string]),
     [text],
   );
 
@@ -89,7 +128,7 @@ const TextType = ({
   useEffect(() => {
     if (!isVisible) return;
 
-    let timeout;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
 
     const currentText = textArray[currentTextIndex];
     const processedText = reverseMode
@@ -143,7 +182,6 @@ const TextType = ({
     }
 
     return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentCharIndex,
     displayedText,
@@ -159,33 +197,36 @@ const TextType = ({
     reverseMode,
     variableSpeed,
     onSentenceComplete,
+    getRandomSpeed,
   ]);
 
   const shouldHideCursor =
     hideCursorWhileTyping &&
-    (currentCharIndex < textArray[currentTextIndex].length || isDeleting);
+    (currentCharIndex < (textArray[currentTextIndex]?.length ?? 0) || isDeleting);
 
-  return createElement(
-    Component,
-    {
-      ref: containerRef,
-      className: `inline-block whitespace-pre-wrap tracking-tight ${className}`,
-      ...props,
-    },
-    <span
-      className="inline"
-      style={{ color: getCurrentTextColor() || "inherit" }}
+  const Tag = Component as React.ElementType;
+
+  return (
+    <Tag
+      ref={containerRef}
+      className={`inline-block whitespace-pre-wrap tracking-tight ${className}`}
+      {...props}
     >
-      {displayedText}
-    </span>,
-    showCursor && (
       <span
-        ref={cursorRef}
-        className={`ml-1 inline-block opacity-100 ${shouldHideCursor ? "hidden" : ""} ${cursorClassName}`}
+        className="inline"
+        style={{ color: getCurrentTextColor() || "inherit" }}
       >
-        {cursorCharacter}
+        {displayedText}
       </span>
-    ),
+      {showCursor && (
+        <span
+          ref={cursorRef}
+          className={`ml-1 inline-block opacity-100 ${shouldHideCursor ? "hidden" : ""} ${cursorClassName}`}
+        >
+          {cursorCharacter}
+        </span>
+      )}
+    </Tag>
   );
 };
 
